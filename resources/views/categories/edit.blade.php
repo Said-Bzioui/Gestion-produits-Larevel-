@@ -3,7 +3,7 @@
     @php
         $page = 'categorie';
     @endphp
-    <h2 class="text-[26px] text-gray-600 font-light  ">nouvelle catégorie</h2>
+    <h2 class="text-[26px] text-gray-600 font-light  ">Update catégorie</h2>
     <a href="{{ route('categories.index') }}" class="text-gray-500 text-[13px] mt-1">
         < retour </a>
 
@@ -12,27 +12,26 @@
                     <img class=" cursor-pointer h-full " src="{{ asset('images/plate2.png') }}">
                 </div>
                 <div class=" grow  p-5">
-                    <form action="{{ route('categories.store') }}" method="POST">
+                    <form action="{{ route('categories.update',$category->id) }}" method="POST">
                         @csrf
+                        @method('PUT')
                         <x-input-error :messages="$errors->all()" /> 
                         <div class="my-6 space-y-1 relative">
                             <x-input-label value='Nom' />
-                            <x-text-input placeholder="nom" name='nom'  />
+                            <x-text-input placeholder="nom" name='nom' value="{{$category->nom}}"  />
                             {{-- <x-input-error :messages="$errors->get('nom')" /> --}} 
                         </div>
                     
                         <div class="my-6 space-y-1 relative">
                             <x-input-label value='Description' />
-                            <x-texterea name="disc" ></x-texterea>
-                            {{-- <x-input-error :messages="$errors->get('disc')" /> --}}
+                            <x-texterea name="disc" >{{$category->disc}}</x-texterea>
 
                         </div>
                     
                         <div class="my-6 space-y-1 relative">
                             <x-input-label value='Meta Title' />
-                            <x-text-input placeholder="meta title" name='m_title'  />
-                            {{-- <x-input-error :messages="$errors->get('m_title')" /> --}}
-
+                            <x-text-input placeholder="meta title" name='m_title' value="{{$category->m_title}}" />
+                      
                         </div>
                     
                         <div class="my-6 space-y-5 flex flex-col">
@@ -43,7 +42,7 @@
                                 </div>
                                 <span class="ms-3 text-sm font-medium text-gray-500">Afficher dans le menu</span>
                             </label>
-                            <x-primary-button>ajouter</x-primary-button>
+                            <x-primary-button>Modifier </x-primary-button>
                         </div>
                     </form>
                     

@@ -43,16 +43,16 @@
                 <span class="text-[13px] hidden lg:block">Gestion des catégories</span>
             </li>
         </a>
-        <a href="">
+        <a href="{{ route('promo.index') }}">
             <li
-                class="flex items-center justify-center md:justify-start px-4 pe-0 py-2 text-gray-700 hover:bg-gray-100  cursor-pointer">
+                class="relative flex items-center justify-center md:justify-start px-4 pe-0 py-2 text-gray-700 hover:bg-gray-100  cursor-pointer  @if ($page == 'promos') bg-primary text-white before:absolute before:bg-primary before:w-10 before:h-full before:-right-8 before:rounded-r-full @endif ">
                 <img class="md:mr-4 w-5 md:w-[20px] " src="{{ asset('images/promo.png') }}">
                 <span class="text-[13px] hidden lg:block"> Code Promo</span>
             </li>
         </a>
-        <a href="">
+        <a href="{{ route('content.index') }}">
             <li
-                class="flex items-center justify-center md:justify-start px-4 pe-0 py-2 text-gray-700 hover:bg-gray-100  cursor-pointer">
+                class="relative flex items-center justify-center md:justify-start px-4 pe-0 py-2 text-gray-700 hover:bg-gray-100  cursor-pointer  @if ($page == 'content') bg-primary hover:bg-primary text-white before:absolute before:bg-primary before:w-10 before:h-full before:-right-8 before:rounded-r-full @endif">
                 <img class="md:mr-4 w-5 md:w-[20px] " src="{{ asset('images/settings.png') }}">
                 <span class="text-[13px] hidden lg:block">Gestion contenu</span>
             </li>

@@ -8,14 +8,21 @@ use Illuminate\Http\Request;
 
 class ProduitsController extends Controller
 {
-    // afficher la vue produit
-    public function index()
+
+    public function index(Request $request)
     {
-        $produits = Produits::paginate(5);
-        $ingred = Ingredients::all();
-        return view('produit.index', compact('produits','ingred'));
+        $search = $request->get('search');
+        $produits = Produits::where('nom', 'like', '%' . $search . '%')
+            ->latest()
+            ->paginate(10);
+
+        if ($request->ajax()) {
+            return view('produit.index', compact('produits'));
+        }
+
+        return view('produit.index', compact('produits'));
     }
-    // afficher la vue produit
+
     public function create()
     {
         return view('produit.create');
