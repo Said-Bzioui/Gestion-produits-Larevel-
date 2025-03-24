@@ -7,10 +7,11 @@
     <p class="text-gray-500 text-[10px] md:text-[13px] mt-1">veuillez seléctionnner un thémes pour votre site</p>
 
     <div class="flex flex-col lg:flex-row mt-12">
-        <div class="w-full lg:w-2/8 bg-gray-50  p-4  rounded-md">
-            <h2 class="mb-10 w-fit mx-auto text-xl">nouveau ingrédient</h2>
-            <form action="{{ route('ingredients.store') }}" method="post" class=" space-y-3 ">
+        <div class="w-full lg:w-2/8   ">
+            <form action="{{ route('ingredients.store') }}" method="post" class="bg-gray-100 p-4  rounded-md space-y-3 ">
                 @csrf
+            <h2 class="mb-10 w-fit mx-auto text-xl">nouveau ingrédient</h2>
+
                 <div>
                     <x-input-label value="Nom(fr)" />
                     <x-text-input class="bg-white " name="fr_nom" />
@@ -70,7 +71,7 @@
                     </thead>
                     <tbody id="table-body" class="space-y-7">
                         @foreach ($ingredients as $ingredient)
-                            <tr class="bg-white border-b border-gray-100 transition-all duration-300 hover:bg-gray-100">
+                            <tr class="bg-white border-b text-gray-600 border-gray-100 hover:bg-gray-100">
                                 <td class="p-2">
                                     {{ $ingredient->id }}
                                 </td>
@@ -108,28 +109,17 @@
                         @endforeach
                     </tbody>
 
-                </table>
+                </table>   
+            <div id="pagination-links">
+            {{$ingredients->links() }}
+        </div>
             </div>
-            {{ $ingredients->links() }}
-            {{-- ------------------ --}}
+     
         </div>
     </div>
 
     {{-- model --}}
 
-    {{-- <div id="confirmMdodal" class="fixed  flex items-center justify-center bg-black/50   ">
-        <div class="bg-white rounded-lg shadow-lg p-6 w-1/5 text-center ">
-            <h2 class="text-xl font-bold text-gray-700 mb-4">Confirmation de suppression</h2>
-            <p class="text-gray-600 mb-4">Êtes-vous sûr de vouloir supprimer cet ingrédient ?</p>
-            <div class="flex justify-center  gap-2">
-                <button id="confirmBtn" class="px-4 py-2 bg-primary  text-white rounded cursor-pointer">Supprimer</button>
-                <button id="cancelBtn" class="px-4 py-2 bg-gray-300 text-gray-700 rounded cursor-pointer">Annuler</button>
-
-            </div>
-        </div>
-        <hr>
-
-    </div> --}}
     <div id="confirmModal"
         class=" hidden fixed inset-0 z-50 flex justify-center items-center w-full md:inset-0  h-screen  bg-black/50">
         <div class="relative p-4 w-full max-w-md max-h-full">

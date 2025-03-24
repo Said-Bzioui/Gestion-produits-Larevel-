@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Route;
 
 
 // ------------------------------------
-Route::get('/test', function () {
-    return view('layout');
-})->name('layout');
 
 // Products Routs
 Route::resource('produits', ProduitsController::class);
@@ -29,7 +26,7 @@ Route::resource('content', ContentController::class);
 
 
 // ------------------------------------
-Route::get('/dashboard', function () {
+Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 

@@ -113,6 +113,7 @@
             <form id="editForm" method="POST" action="">
                 @method('PUT')
                 @csrf
+                <x-input-error :messages="$errors->all()" /> 
                 <div>
                     <x-input-label value="Code promo" />
                     <x-text-input id="editCode" class="bg-white" name="code" />
@@ -155,7 +156,7 @@
                         document.getElementById('editDiscount').value = promo.discount;
                         document.getElementById('editExpired').value =  new Date(promo.expired_at).toISOString().split('T')[0];
                         document.getElementById('editActive').value = promo.active;
-                        form.action =`/promo/${promo.id})`; 
+                        form.action =`/promo/${promo.id}`; 
                     }
                     editForm.classList.remove('hidden');
                 });

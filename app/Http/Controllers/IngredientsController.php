@@ -10,7 +10,7 @@ class IngredientsController extends Controller
     // afficher la vue produit
     public function index()
     {
-        $ingredients = Ingredients::paginate(10);
+        $ingredients = Ingredients::latest()->paginate(10);
         return view('ingredients.index', compact('ingredients'));
     }
     // store function
@@ -44,6 +44,7 @@ class IngredientsController extends Controller
     //delete function
     public function destroy(Ingredients $ingredient)
     {
+        // dd($request);
         $ingredient->delete();
         return redirect()->route('ingredients.index')->with('success', 'Ingredient deleted successfully');
     }

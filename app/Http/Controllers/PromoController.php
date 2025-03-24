@@ -34,13 +34,14 @@ class PromoController extends Controller
     }
     public function update(Request $request, Promo $promo)
     {
-        // dd($promo);
+        // dd($request);
         $validatedData = $request->validate([
-            'code' => 'required|string|max:255',
-            'discount' => 'required|numeric|min:0|max:100',
-            'expired_at' => 'required|date',
-            'is_active' => 'required|boolean',
+            'code' => 'string|max:255',
+            'discount' => 'numeric|min:0|max:100',
+            'expired_at' => 'date',
+            'active' => 'boolean',
         ]);
+        // dd($validatedData);
 
         $promo->update($validatedData);
 

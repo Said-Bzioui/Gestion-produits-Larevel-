@@ -1,7 +1,7 @@
     @props(['message'])
 
-    <div id="toast-success"
-        class="fixed right-3 bottom-3 flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-md "
+    <div id="toast-success  "
+        class="fixed right-12 top-24 flex items-center w-full max-w-xs  p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-xl shadow-green-200/50 "
         role="alert">
         <div
             class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg ">
@@ -29,7 +29,7 @@
         if (toastSuccess) {
             setTimeout(() => {
                 toastSuccess.style.display = 'none';
-            }, 5000);
+            }, 3000);
         }
     </script>
 

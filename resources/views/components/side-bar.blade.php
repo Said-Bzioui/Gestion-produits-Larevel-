@@ -8,7 +8,7 @@
     <ul class="flex flex-col space-y-3 ">
         <a href="{{ route('dashboard') }}">
             <li
-                class="flex items-center justify-center md:justify-start px-4 pe-0 py-2 text-gray-700 hover:bg-gray-100  cursor-pointer">
+                class=" relative flex items-center justify-center md:justify-start px-4 pe-0 py-2 text-gray-700 hover:bg-gray-100  cursor-pointer  @if ($page == 'dashboard') bg-primary text-white before:absolute before:bg-primary before:w-10 before:h-full before:-right-8 before:rounded-r-full @endif">
                 <img class="md:mr-4 w-5 md:w-[20px]  " src="{{ asset('images/dash.png') }}">
                 <span class="text-[13px] grow hidden lg:block"> Tablaue de board</span>
             </li>

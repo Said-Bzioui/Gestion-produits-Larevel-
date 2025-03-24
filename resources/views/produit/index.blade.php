@@ -57,30 +57,29 @@
             </thead>
             <tbody id="table-body">
                 @foreach ($produits as $produit)
-                    <tr class="border-b border-gray-300">
-                        <td scope="row" class="p-2 font-medium text-gray-900 whitespace-nowrap">
+                    <tr class="border-b border-gray-300  text-gray-600">
+                        <td scope="row" class="p-2 font-medium  whitespace-nowrap">
                             <img src="{{ asset('images/plate.png') }}" class="rounded-full" alt="">
                         </td>
-                        <td class="p-2 text-[13px]">{{ $produit->nom }}</td>
+                        <td class="p-2 text-[13px] ">{{ $produit->nom }}</td>
                         <td class="p-2 text-[13px]">{{ $produit->disc }}</td>
                         <td class="p-2 text-[13px]">{{ $produit->emporter }} €</td>
                         <td class="p-2 text-[13px]">{{ $produit->livraison }} €</td>
-                        <td class="p-2 text-[13px] flex flex-wrap  space-x-1 space-y-1">
+                        <td class="p-2 text-[13px] grid grid-cols-2  gap-1">
                             @foreach ($produit->ingredients as $ingredient)
-                                <span class="bg-gray-300 p-1  rounded-sm ">{{ $ingredient->fr_nom }}</span>
+                                <span class="bg-gray-200 text-slate-500 p-1 text-center rounded-sm ">{{ $ingredient->fr_nom }}</span>
                             @endforeach
                         </td>
-                        
                         <td class="p-2 text-[13px]">{{ $produit->title }}</td>
                         <td class="p-2 flex items-center gap-2 h-15 my-auto">
                             <button class="drag-handle cursor-grab">
                                 <i class="fa-solid fa-arrows-up-down-left-right text-lg "></i>
                             </button>
-                            <form id="delete-form-{{ $produit->id }}"
-                                action="{{ route('ingredients.destroy', $produit->id) }}" method="POST">
+                            <form id="delete-form-{{$produit->id }}"
+                                action="{{ route('produits.destroy', $produit->id) }}" method="POST">
                                 @method('DELETE')
                                 @csrf
-                                <button type="button" onclick="showConfirmModal({{ $produit->id }})"
+                                <button type="button" onclick="showConfirmModal({{$produit->id}})"
                                     class="cursor-pointer">
                                     <i class="fa-regular fa-trash-can text-lg "></i>
                                 </button>
@@ -113,7 +112,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
-                    <h3 class="mb-5 text-lg font-normal text-gray-500 ">Êtes-vous sûr de vouloir supprimer cet ingrédient ?</h3>
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 ">Êtes-vous sûr de vouloir supprimer cet Produit ?</h3>
                     <button id="confirmBtn" type="button"
                         class="text-white bg-primary cursor-pointer  focus:ring-4 focus:outline-none font-bold rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                         je suis sûr
@@ -128,7 +127,7 @@
     </div>
 
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#search-box').on('keyup', function() {
