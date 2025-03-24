@@ -82,14 +82,10 @@
                             <div x-data="{
                                 selectedIngredient: [],
                                 availableIngredient: [
-                                    { id: 1, name: 'Ingrédient 1' },
-                                    { id: 2, name: 'Ingrédient 2' },
-                                    { id: 3, name: 'Ingrédient 3' },
-                                    { id: 4, name: 'Ingrédient 4' }
+                                    @foreach ($ingredients as $ingredient)
+                { id: {{ $ingredient->id }},
+                  name: '{{ $ingredient->fr_nom }}' }, @endforeach
                             
-                                    {{-- @foreach ($ingredients as $ingredient)
-                { id: {{ $ingredient->id }}, name: '{{ $ingredient->nom_fr }}' }, @endforeach
-                                    --}}
                                 ]
                             }" class="w-full">
                                 <label for="ingredients" class="block text-[14px] font-[600] my-2">Ingrédients</label>
@@ -142,15 +138,9 @@
                             <div x-data="{
                                 selectedCategories: [],
                                 availableCategories: [
-                                    { id: 1, name: 'categorie 1' },
-                                    { id: 2, name: 'categorie 2' },
-                                    { id: 3, name: 'categorie 3' },
-                                    { id: 4, name: 'categorie 4' }
-                                    {{-- ------------------------------------------------- --}}
-                            
-                                    {{--                                 
-                                  @foreach ($categories as $categorie) 
-                { id: {{ $categorie->id }}, name: '{{ $categorie->nom }}' }, @endforeach --}}
+                                    @foreach ($categories as $categorie) 
+                { id: {{ $categorie->id }},
+                  name: '{{ $categorie->nom }}' }, @endforeach
                                 ]
                             }" class="w-full">
 

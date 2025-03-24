@@ -15,10 +15,9 @@
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
+        <div class="my-12">
             <x-text-input id="password" class="block mt-1 w-full" type="password" name="password"
                 placeholder="*********" required autocomplete="current-password" />
-
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 

@@ -1,9 +1,9 @@
 @props(['messages'])
 
 @if (!empty($messages))
-    <div {{ $attributes->merge(['class' => 'w-full text-md text-white bg-primary px-2 py-1 rounded-full']) }}>
+    <div {{ $attributes->merge(['class' => 'w-full flex items-center justify-center  text-md text-white bg-primary px-2 py-1 rounded-full']) }}>
         <span class="flex items-center"> 
-            <i class="fa-solid fa-xmark text-3xl mr-2 font-normal"></i> 
+            <i class="fa-solid fa-triangle-exclamation text-3xl mr-5 font-normal"></i>
             {{ is_array($messages) ? $messages[0] : $messages }}
         </span>
     </div>

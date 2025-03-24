@@ -10,7 +10,7 @@
         <div class="w-full lg:w-2/8   ">
             <form action="{{ route('ingredients.store') }}" method="post" class="bg-gray-100 p-4  rounded-md space-y-3 ">
                 @csrf
-            <h2 class="mb-10 w-fit mx-auto text-xl">nouveau ingrédient</h2>
+                <h2 class="mb-10 w-fit mx-auto text-xl">nouveau ingrédient</h2>
 
                 <div>
                     <x-input-label value="Nom(fr)" />
@@ -97,85 +97,107 @@
                                             <i class="fa-regular fa-trash-can text-lg "></i>
                                         </button>
                                     </form>
-
-
-                                    <form action="{{ route('ingredients.edit', $ingredient->id) }}" method="GET">
-                                        <button class="cursor-pointer">
-                                            <i class="fa-solid fa-pencil text-lg "></i>
-                                        </button>
-                                    </form>
+                                    <button class="editBtn cursor-pointer" data-ingredient='@json($ingredient)'>
+                                        <i class="fa-solid fa-pencil text-lg "></i>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
 
-                </table>   
-            <div id="pagination-links">
-            {{$ingredients->links() }}
-        </div>
-            </div>
-     
-        </div>
-    </div>
-
-    {{-- model --}}
-
-    <div id="confirmModal"
-        class=" hidden fixed inset-0 z-50 flex justify-center items-center w-full md:inset-0  h-screen  bg-black/50">
-        <div class="relative p-4 w-full max-w-md max-h-full">
-            <div class="relative bg-white rounded-lg shadow-sm ">
-                <div class="p-4 md:p-5 text-center">
-                    <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 " aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
-                    <h3 class="mb-5 text-lg font-normal text-gray-500 ">Êtes-vous sûr de vouloir supprimer cet ingrédient ?</h3>
-                    <button id="confirmBtn" type="button"
-                        class="text-white bg-primary cursor-pointer  focus:ring-4 focus:outline-none font-bold rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                        je suis sûr
-                    </button>
-                    <button id="cancelBtn" type="button"
-                        class="py-2.5 px-5 ms-3 text-sm cursor-pointer font-bold text-gray-500 focus:outline-none bg-white rounded-lg border-2 border-gray-200 ">
-                        annuler
-                    </button>
+                </table>
+                <div id="pagination-links">
+                    {{ $ingredients->links() }}
                 </div>
             </div>
+
         </div>
     </div>
+    {{-- edite  model --}}
+    <div class="editForm hidden fixed top-0 left-0 w-full h-full bg-slate-800/50 flex items-center justify-center z-50">
+        <div class="relative bg-gray-50 w-1/3 shadow-2xl p-4 rounded-md">
+            <div
+                class="closeBtn absolute -right-3 -top-3 bg-primary text-white cursor-pointer w-8 h-8 flex items-center justify-center rounded-full">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <h2 class="mb-10 w-fit mx-auto text-md uppercase">Update CODE PROMO</h2>
+            <form id="editForm" method="POST" action="">
+                @method('PUT')
+                @csrf
+                <x-input-error :messages="$errors->all()" />
+                <div>
+                    <x-input-label value="nom(fr)" />
+                    <x-text-input id="editCode" class="bg-white" name="fr_nom" />
+                </div>
+                <div>
+                    <x-input-label value="nom(fr)" />
+                    <x-text-input id="editDiscount" class="bg-white" name="en_nom" />
+                </div>
+                <div>
+                    <x-input-label value="nom(fr)" />
+                    <x-text-input id="editExpired" class="bg-white" name="nl_nom" />
+                </div>
+                <div class="flex justify-center">
+                    <x-primary-button class="mt-8 mx-auto rounded-lg">Modifier</x-primary-button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- DELETE COMPONENT --}}
+    <x-delete-model itemName="ingredient" />
 
 
     {{-- ---------- --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let tableBody = document.getElementById("table-body");
-            new Sortable(tableBody, {
-                animation: 200,
-                handle: ".drag-handle",
-                ghostClass: "bg-gray-200",
-            });
-            let confirmModal = document.getElementById('confirmModal');
-            let confirmBtn = document.getElementById('confirmBtn');
-            let cancelBtn = document.getElementById('cancelBtn');
-            let deleteForm = null;
+        document.addEventListener('DOMContentLoaded', () => {
+            const editBtns = document.querySelectorAll('.editBtn');
+            const editForm = document.querySelector('.editForm');
+            const closeBtn = document.querySelector('.closeBtn');
+            const form = document.getElementById('editForm');
 
-            function showConfirmModal(ingredientId) {
-                deleteForm = document.getElementById(`delete-form-${ingredientId}`);
-                confirmModal.classList.remove('hidden');
-            }
-
-            confirmBtn.addEventListener('click', function() {
-                if (deleteForm) {
-                    deleteForm.submit();
-                }
+            editBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const ingredient = btn.dataset.ingredient ? JSON.parse(btn.dataset.ingredient) :
+                        null;
+                    console.log(ingredient);
+                    if (ingredient) {
+                        document.getElementById('editCode').value = ingredient.fr_nom;
+                        document.getElementById('editDiscount').value = ingredient.en_nom;
+                        document.getElementById('editExpired').value = ingredient.nl_nom;
+                        form.action = `/ingredients/${ingredient.id}`;
+                    }
+                    editForm.classList.remove('hidden');
+                });
             });
 
-            cancelBtn.addEventListener('click', function() {
-                confirmModal.classList.add('hidden');
+            closeBtn.addEventListener('click', () => {
+                editForm.classList.add('hidden');
             });
-
-            window.showConfirmModal = showConfirmModal;
         });
+      // ---------------CONFIRM DELETE-------------
+document.addEventListener("DOMContentLoaded", function() {
+    let confirmModal = document.getElementById('confirmModal');
+    let confirmBtn = document.getElementById('confirmBtn');
+    let cancelBtn = document.getElementById('cancelBtn');
+    let deleteForm = null;
+
+    function showConfirmModal(ingredientId) {
+        deleteForm = document.getElementById(`delete-form-${ingredientId}`);
+        confirmModal.classList.remove('hidden');
+    }
+
+    confirmBtn.addEventListener('click', function() {
+        if (deleteForm) {
+            deleteForm.submit();
+        }
+    });
+
+    cancelBtn.addEventListener('click', function() {
+        confirmModal.classList.add('hidden');
+    });
+
+    window.showConfirmModal = showConfirmModal;
+});
     </script>
 @endsection

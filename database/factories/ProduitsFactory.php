@@ -24,7 +24,6 @@ class ProduitsFactory extends Factory
             'disc' => $this->faker->sentence(),
             'emporter' => $this->faker->randomFloat(2, 10, 100),
             'livraison' => $this->faker->randomFloat(2, 10, 100),
-            'category_id' => Category::factory(),
             'title' => $this->faker->sentence(),
         ];
     }

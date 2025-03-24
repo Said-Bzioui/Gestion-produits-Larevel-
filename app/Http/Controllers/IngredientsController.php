@@ -25,14 +25,10 @@ class IngredientsController extends Controller
         return redirect()->route('ingredients.index')->with('success', 'Ingredient created successfully.');
     }
 
-    //edit function
-    public function edit(Ingredients $ingredient)
-    {
-        return view('ingredients.edite', compact('ingredient'));
-    }
     //update function
     public function update(Request $request, Ingredients $ingredient)
     {
+        // dd($request);
         $request->validate([
             'fr_nom' => 'required',
             'en_nom' => 'required',

@@ -116,7 +116,6 @@
     </div>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#search-box').on('keyup', function() {
@@ -136,12 +135,7 @@
             });
         });
         document.addEventListener("DOMContentLoaded", function() {
-            let tableBody = document.getElementById("table-body");
-            new Sortable(tableBody, {
-                animation: 200,
-                handle: ".drag-handle",
-                ghostClass: "bg-gray-200",
-            });
+        
             let confirmModal = document.getElementById('confirmModal');
             let confirmBtn = document.getElementById('confirmBtn');
             let cancelBtn = document.getElementById('cancelBtn');

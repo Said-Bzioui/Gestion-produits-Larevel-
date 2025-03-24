@@ -45,8 +45,8 @@
                 </div>
             </div>
             <div class="p-4 ">
-                <table class="w-full text-sm text-left   ">
-                    <thead class="text-md  text-gray-600 uppercase bg-gray-50 ">
+                <table class="w-full text-left  text-gray-400 ">
+                    <thead class="text-sm text-gray-700 uppercase bg-gray-50 ">
                         <tr>
                             <th scope="col" class=" p-2 ">
                                 Référence
@@ -63,83 +63,106 @@
                             <th scope="col" class=" p-2 ">
                                 active
                             </th>
-
                             <th scope="col" class=" p-2 ">
                                 Actions
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="space-y-7 ">
+                    <tbody id="table-body" class="space-y-7">
                         @foreach ($promos as $promo)
-                            <tr class="text-gray-500 ">
-                                <td class="p-2">{{ $promo->id }}</td>
-                                <td class="p-2">{{ $promo->code }}</td>
-                                <td class="p-2">{{ $promo->discount }}%</td>
-                                <td class="p-2">{{ $promo->expired_at->format('d-m-Y') }}</td>
-                                <td class="p-2  ">
-                                    <span
-                                        class="@if ($promo->active == '1') bg-green-100 text-green-800 @else bg-red-100 text-red-800 @endif  text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm">{{ $promo->active == '1' ? 'Y' : 'N' }}</span>
+                            <tr class="bg-white border-b text-gray-600 border-gray-100 hover:bg-gray-100">
+                                <td class="p-2">
+                                    {{ $promo->id }}
+                                </td>
+                                <td class="p-2">
+                                    {{ $promo->code }}
+                                </td>
+                                <td class="p-2">
+                                    {{ $promo->discount }}%
+                                </td>
+                                <td class="p-2 text-[12px]">
+                                    {{ $promo->expired_at }}
+                                </td>
+                                <td class="p-2 text-[12px]">
+                                    <span class="text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm">
+                                        @if ($promo->active == '1')
+                                            <i class="fa-solid fa-circle-check text-xl text-green-700"></i>
+                                        @else
+                                            <i class="fa-solid fa-circle-xmark text-xl text-red-700"></i>
+                                        @endif
+                                    </span>
                                 </td>
                                 <td class="p-2 flex items-center gap-2">
-                                    <form action="{{ route('promo.destroy', $promo->id) }}" method="POST">
+                                    <button class="drag-handle cursor-grab">
+                                        <i class="fa-solid fa-arrows-up-down-left-right text-lg "></i>
+                                    </button>
+                                    <form id="delete-form-{{ $promo->id }}"
+                                        action="{{ route('promo.destroy', $promo->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="cursor-pointer ">
-                                            <img src="{{ asset('images/delete.png') }}" class="w-[13px]" alt="">
-                                        </button>
+                                        <button type="button" class="cursor-pointer "
+                                            onclick="showConfirmModal({{ $promo->id }})">
+                                            <i class="fa-regular fa-trash-can text-lg "></i> </button>
                                     </form>
+
                                     <button class="editBtn cursor-pointer" data-promo='@json($promo)'>
-                                        <img src="{{ asset('images/edite.png') }}" class="w-[13px]" alt="">
+                                        <i class="fa-solid fa-pencil text-lg "></i>
                                     </button>
-                                    
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
-                </table>
-                {{ $promos->links() }}
 
+                </table>
+                <div id="pagination-links">
+                    {{ $promos->links() }}
+                </div>
             </div>
-            {{-- ------------------ --}}
         </div>
     </div>
-    {{--edite  model --}}
-    <div class="editForm hidden fixed top-0 left-0 w-full h-full bg-slate-800/50 flex items-center justify-center z-50">
-        <div class="relative bg-gray-50 w-1/3 shadow-2xl p-4 rounded-md">
-            <div class="closeBtn absolute -right-3 -top-3 bg-primary text-white cursor-pointer w-8 h-8 flex items-center justify-center rounded-full">
-                <i class="fa-solid fa-xmark"></i>
+    {{-- DELETE COMPONENT --}}
+    <x-delete-model itemName="code promo" />
+
+    {{-- Edit Model --}}
+    <div class="editForm hidden fixed inset-0 bg-slate-800/50 flex items-center justify-center z-50">
+        <div class="relative bg-white w-full max-w-lg shadow-2xl p-6 rounded-lg">
+            <div
+                class="closeBtn absolute -right-4 -top-4 bg-red-500 text-white cursor-pointer w-10 h-10 flex items-center justify-center rounded-full shadow-md hover:bg-red-600 transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
             </div>
-            <h2 class="mb-10 w-fit mx-auto text-md uppercase">Update CODE PROMO</h2>
+            <h2 class="mb-6 text-center text-lg font-semibold uppercase text-gray-700">Update CODE PROMO</h2>
             <form id="editForm" method="POST" action="">
                 @method('PUT')
                 @csrf
-                <x-input-error :messages="$errors->all()" /> 
-                <div>
-                    <x-input-label value="Code promo" />
-                    <x-text-input id="editCode" class="bg-white" name="code" />
+                <x-input-error :messages="$errors->all()" />
+                <div class="mb-4">
+                    <x-input-label value="Code promo" class="text-gray-600 font-medium" />
+                    <x-text-input id="editCode" class="w-full  p-2  " name="code" />
                 </div>
-                <div>
-                    <x-input-label value="Discount" />
-                    <x-text-input id="editDiscount" class="bg-white" name="discount" />
+                <div class="mb-4">
+                    <x-input-label value="Discount" class="text-gray-600 font-medium" />
+                    <x-text-input id="editDiscount" class="w-full " name="discount" />
                 </div>
-                <div>
-                    <x-input-label value="Expired_at" />
-                    <x-text-input id="editExpired" class="bg-white" name="expired_at" />
+                <div class="mb-4">
+                    <x-input-label value="Expired_at" class="text-gray-600 font-medium" />
+                    <x-text-input id="editExpired" class="w-full " name="expired_at" />
                 </div>
-                <div>
-                    <x-input-label value="Active" />
-                    <select id="editActive" name="active">
-                        <option value="1">Active</option>
-                        <option value="0">Non Active</option>
+                <div class="mb-4">
+                    <x-input-label value="Active" class="text-gray-600 font-medium" />
+                    <select id="editActive" name="active"
+                        class="w-full  border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500">
+                        <option value="1">Activer</option>
+                        <option value="0">Désactiver </option>
                     </select>
                 </div>
                 <div class="flex justify-center">
-                    <x-primary-button class="mt-8 mx-auto rounded-lg">Modifier</x-primary-button>
+                    <x-primary-button
+                        class="mt-6 px-6 py-2  text-white rounded-lg shadow-md hover:bg-primary/80 transition">Modifier</x-primary-button>
                 </div>
             </form>
         </div>
     </div>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const editBtns = document.querySelectorAll('.editBtn');
@@ -154,9 +177,10 @@
                     if (promo) {
                         document.getElementById('editCode').value = promo.code;
                         document.getElementById('editDiscount').value = promo.discount;
-                        document.getElementById('editExpired').value =  new Date(promo.expired_at).toISOString().split('T')[0];
+                        document.getElementById('editExpired').value = new Date(promo.expired_at)
+                            .toISOString().split('T')[0];
                         document.getElementById('editActive').value = promo.active;
-                        form.action =`/promo/${promo.id}`; 
+                        form.action = `/promo/${promo.id}`;
                     }
                     editForm.classList.remove('hidden');
                 });
@@ -165,6 +189,30 @@
             closeBtn.addEventListener('click', () => {
                 editForm.classList.add('hidden');
             });
+        });
+        // ---------------CONFIRM DELETE-------------
+        document.addEventListener("DOMContentLoaded", function() {
+            let confirmModal = document.getElementById('confirmModal');
+            let confirmBtn = document.getElementById('confirmBtn');
+            let cancelBtn = document.getElementById('cancelBtn');
+            let deleteForm = null;
+
+            function showConfirmModal(itemId) {
+                deleteForm = document.getElementById(`delete-form-${itemId}`);
+                confirmModal.classList.remove('hidden');
+            }
+
+            confirmBtn.addEventListener('click', function() {
+                if (deleteForm) {
+                    deleteForm.submit();
+                }
+            });
+
+            cancelBtn.addEventListener('click', function() {
+                confirmModal.classList.add('hidden');
+            });
+
+            window.showConfirmModal = showConfirmModal;
         });
     </script>
 @endsection

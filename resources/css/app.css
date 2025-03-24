@@ -1,4 +1,5 @@
 @import "tailwindcss";
+/* @import 'flowbite'; */
 @source "../views";
 /* Preline UI */
 @import "../../node_modules/preline/variants.css";
