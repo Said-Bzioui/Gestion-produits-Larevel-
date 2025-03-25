@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    buttons[0];
+    buttons[0].click();
 });
 
 // ---------------TOAST-------------

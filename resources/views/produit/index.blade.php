@@ -55,7 +55,7 @@
             <div class="tab-content p-4 hidden" id="tab{{ $category->id }}">
                 {{-- Tableau des produits --}}
                 <div class="relative px-3 mt-5 overflow-x-auto tab-panel rounded-lg" id="produits-table">
-                  
+
                     <table class="w-full text-sm text-left text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
@@ -100,7 +100,7 @@
                                                 <i class="fa-regular fa-trash-can text-lg"></i>
                                             </button>
                                         </form>
-                                        <form action="" method="GET">
+                                        <form action="{{ route('produits.edit', $produit->id) }}" method="GET">
                                             <button class="cursor-pointer">
                                                 <i class="fa-solid fa-pencil text-lg"></i>
                                             </button>
@@ -171,8 +171,8 @@
             let cancelBtn = document.getElementById('cancelBtn');
             let deleteForm = null;
 
-            function showConfirmModal(ingredientId) {
-                deleteForm = document.getElementById(`delete-form-${ingredientId}`);
+            function showConfirmModal(itemId) {
+                deleteForm = document.getElementById(`delete-form-${itemId}`);
                 confirmModal.classList.remove('hidden');
             }
 

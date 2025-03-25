@@ -12,7 +12,7 @@ class ProduitsController extends Controller
 
     public function index(Request $request)
     {
-        $search = $request->get('search', ''); 
+        $search = $request->get('search', '');
 
         $produits = Produits::when($search, function ($query, $search) {
             return $query->where('nom', 'like', '%' . $search . '%');
@@ -26,9 +26,6 @@ class ProduitsController extends Controller
 
         return view('produit.index', compact('produits', 'categories'));
     }
-
-
-
     public function create()
     {
         $ingredients = Ingredients::all();
@@ -36,12 +33,36 @@ class ProduitsController extends Controller
         return view('produit.create', compact('ingredients', 'categories'));
     }
 
-    //delete function
-    public function destroy(Produits $produits, Request $request)
+    //store function
+    public function store(Request $request)
     {
-        if (!$produits) {
-            return redirect()->route('produits.index')->with('success', 'Product not found');
-        }
+        dd($request->all());
+        $request->validate([
+            'nom' => 'required',
+            'prix' => 'required',
+            'category_id' => 'required',
+            'ingredients' => 'required|array',
+            'ingredients.*' => 'required|exists:ingredients,id',
+        ]);
+
+        $produits = Produits::create($request->only('nom', 'prix', 'category_id'));
+
+        $produits->ingredients()->attach($request->ingredients);
+
+        return redirect()->route('produits.index')->with('success', 'produits created successfully');
+    }
+    // edit function
+    public function edit(Produits $produits)
+    {
+        $ingredients = Ingredients::all();
+        $categories = Category::all();
+        return view('produit.edite', compact('produits', 'ingredients', 'categories'));
+    }
+
+    //delete function
+    public function destroy(Produits $produits)
+    {
+        dd($produits);
         $produits->delete();
         return redirect()->route('produits.index')->with('success', 'produits deleted successfully');
     }

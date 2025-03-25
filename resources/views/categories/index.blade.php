@@ -42,7 +42,7 @@
 
 
     <div class="relative px-3 mt-5 overflow-x-auto tab-panel rounded-lg" id="categories-table">
-        <table class="w-full text-sm text-left text-gray-400">
+        <table class="w-full text-sm text-left text-gray-600">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                     <th scope="col" class="p-4 text-[11px]">image</th>
