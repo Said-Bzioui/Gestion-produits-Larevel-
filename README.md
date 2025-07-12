@@ -21,6 +21,9 @@ A clean and responsive **Product Management Web App** built entirely with **Lara
 ### 🖥️ PROMO 
 ![PROMO LIST](./screenshots/promo.png)
 
+### 🖥️ Update PROMO 
+![PROMO LIST](./screenshots/mod_promo.png)
+
 ---
 
 <h2>🔧 Features</h2>
@@ -31,8 +34,7 @@ A clean and responsive **Product Management Web App** built entirely with **Lara
   <li><img src="https://img.icons8.com/ios-glyphs/20/sorting-options.png"/> Category Management</li>
   <li><img src="https://img.icons8.com/ios-glyphs/20/image.png"/> Product Image Upload</li>
   <li><img src="https://img.icons8.com/ios-glyphs/20/search.png"/> Search & Filter Products</li>
-  <li><img src="https://img.icons8.com/ios-glyphs/20/combo-chart.png"/> Dashboard Stats (Product count, stock alerts)</li>
-  <li><img src="https://img.icons8.com/ios-glyphs/20/responsive.png"/> Responsive Design (Bootstrap 5)</li>
+  <li><img src="https://img.icons8.com/ios-glyphs/20/responsive.png"/> Responsive Design (TailwindCss)</li>
 </ul>
 
 ---
