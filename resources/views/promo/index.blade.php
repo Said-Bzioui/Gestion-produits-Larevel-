@@ -80,8 +80,8 @@
                                 <td class="p-2">
                                     {{ $promo->discount }}%
                                 </td>
-                                <td class="p-2 text-[12px]">
-                                    {{ $promo->expired_at }}
+                                <td class="p-2 text-[14px]">
+                                    {{ $promo->expired_at->format('Y-m-d') }}
                                 </td>
                                 <td class="p-2 text-[12px]">
                                     <span class="text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm">
@@ -177,8 +177,7 @@
                     if (promo) {
                         document.getElementById('editCode').value = promo.code;
                         document.getElementById('editDiscount').value = promo.discount;
-                        document.getElementById('editExpired').value = new Date(promo.expired_at)
-                            .toISOString().split('T')[0];
+                        document.getElementById('editExpired').value = new Date(promo.expired_at).toISOString().split('T')[0];
                         document.getElementById('editActive').value = promo.active;
                         form.action = `/promo/${promo.id}`;
                     }
